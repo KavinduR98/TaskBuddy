@@ -8,7 +8,7 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskState extends State<AddTask> {
-  final actionType = ['P', 'C'];
+  final actionType = ['Pending', 'Complete'];
   String? selectedActionType;
 
   @override
