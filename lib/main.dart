@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app_firebase/project/add.dart';
 import 'project/home.dart';
+import 'project/update.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -19,7 +20,8 @@ class MyApp extends StatelessWidget {
       title: "Demo App",
       routes: {
         '/': (context) => const HomePage(),
-        '/add': (context) => const AddTask()
+        '/add': (context) => const AddTask(),
+        '/update': (context) => const UpdateTask()
       },
       initialRoute: '/',
     );
