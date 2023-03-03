@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class AddTask extends StatefulWidget {
@@ -11,6 +12,21 @@ class _AddTaskState extends State<AddTask> {
   final actionType = ['Pending', 'Complete'];
   String? selectedActionType;
 
+  final CollectionReference task =
+      FirebaseFirestore.instance.collection('task');
+
+  TextEditingController taskTitle = TextEditingController();
+  TextEditingController taskDes = TextEditingController();
+
+  void addTask() {
+    final data = {
+      'title': taskTitle.text,
+      'des': taskDes.text,
+      'type': selectedActionType
+    };
+    task.add(data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,26 +37,25 @@ class _AddTaskState extends State<AddTask> {
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
-          // ignore: prefer_const_literals_to_create_immutables
           children: [
-            // ignore: prefer_const_constructors
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: const TextField(
-                decoration: InputDecoration(
+              child: TextField(
+                controller: taskTitle,
+                decoration: const InputDecoration(
                     border: OutlineInputBorder(), label: Text('Title')),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
               child: TextField(
+                controller: taskDes,
                 keyboardType: TextInputType.multiline,
                 maxLength: 50,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     border: OutlineInputBorder(), label: Text('Description')),
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: DropdownButtonFormField(
@@ -59,7 +74,10 @@ class _AddTaskState extends State<AddTask> {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    addTask();
+                    Navigator.pop(context);
+                  },
                   style: ButtonStyle(
                       minimumSize: MaterialStateProperty.all(
                           const Size(double.infinity, 50)),
