@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:todo_app_firebase/screens/login.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,12 +14,38 @@ class _HomePageState extends State<HomePage> {
   final CollectionReference task =
       FirebaseFirestore.instance.collection('task');
 
+  void deleteTask(docId) {
+    task.doc(docId).delete();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('All ToDos'),
-        backgroundColor: Colors.indigo,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(70),
+        child: AppBar(
+          title: Row(
+            // ignore: prefer_const_literals_to_create_immutables
+            children: [
+              const Text('All ToDos'),
+              const SizedBox(
+                width: 250,
+              ),
+              IconButton(
+                  onPressed: () async => {
+                        await FirebaseAuth.instance.signOut(),
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Login(),
+                            ),
+                            (route) => false)
+                      },
+                  icon: const Icon(Icons.logout))
+            ],
+          ),
+          backgroundColor: Colors.indigo,
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -63,7 +91,8 @@ class _HomePageState extends State<HomePage> {
                               radius: 30.0,
                               child: Text(
                                 taskSnap['type'],
-                                style: const TextStyle(fontSize: 12.0),
+                                style: const TextStyle(
+                                    fontSize: 12.0, color: Colors.amber),
                               ),
                             ),
                           ),
@@ -96,10 +125,12 @@ class _HomePageState extends State<HomePage> {
                               },
                               icon: const Icon(Icons.edit),
                               iconSize: 30.0,
-                              color: Colors.blue,
+                              color: Colors.green[600],
                             ),
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                deleteTask(taskSnap.id);
+                              },
                               icon: const Icon(Icons.delete),
                               iconSize: 30.0,
                               color: Colors.red,

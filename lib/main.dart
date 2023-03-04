@@ -1,29 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app_firebase/project/add.dart';
-import 'project/home.dart';
-import 'project/update.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:todo_app_firebase/screens/add.dart';
+import 'package:todo_app_firebase/screens/login.dart';
+import 'screens/home.dart';
+import 'screens/update.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Demo App",
-      routes: {
-        '/': (context) => const HomePage(),
-        '/add': (context) => const AddTask(),
-        '/update': (context) => const UpdateTask()
-      },
-      initialRoute: '/',
-    );
+    return FutureBuilder(
+        future: _initialization,
+        builder: (context, snapShot) {
+          // Check for Errors
+          if (snapShot.hasError) {
+            print("Something Went Wrong");
+          }
+          if (snapShot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return MaterialApp(
+            title: "Todo App with Firebase Authentication",
+            theme: ThemeData(
+              primarySwatch: Colors.indigo,
+            ),
+            debugShowCheckedModeBanner: false,
+            routes: {
+              '/': (context) => const Login(),
+              '/add': (context) => const AddTask(),
+              '/update': (context) => const UpdateTask()
+            },
+            initialRoute: '/',
+          );
+        });
   }
 }
