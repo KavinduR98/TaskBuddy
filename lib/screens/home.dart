@@ -23,28 +23,31 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70),
-        child: AppBar(
-          title: Row(
-            // ignore: prefer_const_literals_to_create_immutables
-            children: [
-              const Text('All ToDos'),
-              const SizedBox(
-                width: 250,
-              ),
-              IconButton(
-                  onPressed: () async => {
-                        await FirebaseAuth.instance.signOut(),
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Login(),
-                            ),
-                            (route) => false)
-                      },
-                  icon: const Icon(Icons.logout))
-            ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 2.0),
+          child: AppBar(
+            title: Row(
+              // ignore: prefer_const_literals_to_create_immutables
+              children: [
+                const Text('TaskBuddy'),
+                const SizedBox(
+                  width: 240,
+                ),
+                IconButton(
+                    onPressed: () async => {
+                          await FirebaseAuth.instance.signOut(),
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Login(),
+                              ),
+                              (route) => false)
+                        },
+                    icon: const Icon(Icons.logout))
+              ],
+            ),
+            backgroundColor: Colors.indigo,
           ),
-          backgroundColor: Colors.indigo,
         ),
       ),
       floatingActionButton: FloatingActionButton(

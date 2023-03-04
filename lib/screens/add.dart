@@ -74,19 +74,21 @@ class _AddTaskState extends State<AddTask> {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: ElevatedButton(
-                  onPressed: () {
-                    addTask();
-                    Navigator.pop(context);
-                  },
-                  style: ButtonStyle(
-                      minimumSize: MaterialStateProperty.all(
-                          const Size(double.infinity, 50)),
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.indigo)),
-                  child: const Text(
-                    'Submit',
-                    style: TextStyle(fontSize: 20.0),
-                  )),
+                onPressed: () {
+                  addTask();
+                  Navigator.pop(context);
+                },
+                style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(
+                    const Size(double.infinity, 50),
+                  ),
+                  backgroundColor: MaterialStateProperty.all(Colors.indigo),
+                ),
+                child: const Text(
+                  'Submit',
+                  style: TextStyle(fontSize: 20.0),
+                ),
+              ),
             )
           ],
         ),

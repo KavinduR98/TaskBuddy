@@ -82,8 +82,14 @@ class _LoginState extends State<Login> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70),
-        child: AppBar(
-          title: const Text("User Login"),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 2.0),
+          child: AppBar(
+            title: const Text(
+              "User Login",
+            ),
+            titleTextStyle: const TextStyle(fontSize: 26.0),
+          ),
         ),
       ),
       body: Form(
@@ -93,7 +99,7 @@ class _LoginState extends State<Login> {
           child: ListView(
             children: [
               Container(
-                margin: const EdgeInsets.symmetric(vertical: 10.0),
+                margin: const EdgeInsets.only(top: 200.0),
                 child: TextFormField(
                   autofocus: false,
                   decoration: const InputDecoration(
@@ -135,34 +141,37 @@ class _LoginState extends State<Login> {
                   },
                 ),
               ),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        // Validate returns true if the form is valid, otherwise false.
-                        if (_formKey.currentState!.validate()) {
-                          setState(() {
-                            email = emailController.text;
-                            password = passwordController.text;
-                          });
-                          userLogin();
-                        }
-                      },
-                      child: const Text(
-                        'Login',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                    ),
-                  ],
+              ElevatedButton(
+                style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(
+                    const Size(double.infinity, 50),
+                  ),
+                  backgroundColor: MaterialStateProperty.all(Colors.indigo),
+                ),
+                onPressed: () {
+                  // Validate returns true if the form is valid, otherwise false.
+                  if (_formKey.currentState!.validate()) {
+                    setState(() {
+                      email = emailController.text;
+                      password = passwordController.text;
+                    });
+                    userLogin();
+                  }
+                },
+                child: const Text(
+                  'Login',
+                  style: TextStyle(fontSize: 18.0),
                 ),
               ),
+              const SizedBox(height: 8.0),
               Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Don't have an Account? "),
+                    const Text(
+                      "Don't have an Account? ",
+                      style: TextStyle(fontSize: 16.0),
+                    ),
                     TextButton(
                       onPressed: () => {
                         Navigator.pushAndRemoveUntil(
@@ -173,7 +182,10 @@ class _LoginState extends State<Login> {
                             ),
                             (route) => false)
                       },
-                      child: const Text('Signup'),
+                      child: const Text(
+                        'Signup',
+                        style: TextStyle(fontSize: 16.0),
+                      ),
                     ),
                   ],
                 ),

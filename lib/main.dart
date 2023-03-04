@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app_firebase/screens/add.dart';
 import 'package:todo_app_firebase/screens/login.dart';
+import 'package:todo_app_firebase/screens/splash.dart';
 import 'screens/home.dart';
 import 'screens/update.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -33,7 +34,8 @@ class MyApp extends StatelessWidget {
             ),
             debugShowCheckedModeBanner: false,
             routes: {
-              '/': (context) => const Login(),
+              '/': (context) => const Splash(),
+              '/login': (context) => const Login(),
               '/add': (context) => const AddTask(),
               '/update': (context) => const UpdateTask()
             },
